@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>
+    {% block title %}
+      Startup Organizer
+    {% endblock title %}
+  </title>
+</head>
+<body>
+  <div>
+    <header>
+      <h1>Startup Organizer</h1>
+    </header>
+    <main>
+      {% block content %}
+        This is default content!
+      {% endblock content %}
+    </main>
+  </div>
+  <footer>
+    <p>
+      &copy; 2019
+      <a href="https://ranajayontheroad.com">Ranajay Das</a>
+    </p>
+    <p>
+      Created for <a href="https://Django-Unleashed.com">Django Unleashed</a>
+    </p>
+  </footer>
+</body>
+</html>
