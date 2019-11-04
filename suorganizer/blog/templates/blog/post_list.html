@@ -5,6 +5,10 @@
 {% endblock title %}
 
 {% block content %}
+  <div>
+    <a href="{% url 'blog_post_create' %}">Create New Post</a>
+  </div>
+
   {% for post in post_list %}
     <article>
       <header>
@@ -14,6 +18,15 @@
           </a>
         </h2>
         <p>
+          <ul>
+            <li>
+              <a href="{{ post.get_update_url }}">Edit Post</a>
+            </li>
+            <li>
+            <a href="{{ post.get_update_url }}">Delete Post</a>
+          </li>
+
+          </ul>
           Written on:
           <time datetime="{{ post.pub_date|date:"Y-m-d" }}">
             {{ post.pub_date|date:"l, F jS, Y" }}

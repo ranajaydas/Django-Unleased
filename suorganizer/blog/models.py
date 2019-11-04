@@ -11,8 +11,8 @@ class Post(models.Model):
         unique_for_month='pub_date')
     text = models.TextField()
     pub_date = models.DateField('date published', auto_now_add=True)
-    startups = models.ManyToManyField(Startup, related_name='blog_posts')
-    tags = models.ManyToManyField(Tag, related_name='blog_posts')
+    startups = models.ManyToManyField(Startup, related_name='blog_posts')   # related_name used instead of 'post_set'
+    tags = models.ManyToManyField(Tag, related_name='blog_posts')   # related_name used instead of 'post_set'
 
     class Meta:
         verbose_name = 'blog post'
@@ -31,3 +31,14 @@ class Post(models.Model):
                                'year': self.pub_date.year,
                                'month': self.pub_date.month})
 
+    def get_update_url(self):
+        return reverse('blog_post_update',
+                       kwargs={'slug': self.slug,
+                               'year': self.pub_date.year,
+                               'month': self.pub_date.month})
+
+    def get_delete_url(self):
+        return reverse('blog_post_delete',
+                       kwargs={'slug': self.slug,
+                               'year': self.pub_date.year,
+                               'month': self.pub_date.month})

@@ -9,12 +9,21 @@
     <header>
       <h2>{{ post.title|title }}</h2>
       <p>
+        <ul>
+          <li>
+            <a href="{{ post.get_update_url }}">Edit Post</a>
+          </li>
+          <li>
+            <a href="{{ post.get_delete_url }}">Delete Post</a>
+          </li>
+        </ul>
         Written on
         <time datetime="{{ post.pub_date|date:'Y-m-d' }}">
           {{ post.pub_date|date:"l, F jS, Y" }}
         </time>
       </p>
     </header>
+
     {{ post.text|linebreaks }}
 
     {% if post.startups.all or post.tags.all %}
