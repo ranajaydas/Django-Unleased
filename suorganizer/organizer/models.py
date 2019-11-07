@@ -29,7 +29,7 @@ class Startup(models.Model):
     founded_date = models.DateField('date founded')
     contact = models.EmailField()
     website = models.URLField(max_length=255)
-    tags = models.ManyToManyField(Tag)
+    tags = models.ManyToManyField(Tag, blank=True)
 
     class Meta:
         ordering = ['name']
@@ -50,6 +50,7 @@ class Startup(models.Model):
 
 class NewsLink(models.Model):
     title = models.CharField(max_length=63)
+    slug = models.SlugField(max_length=63)
     link = models.URLField(max_length=255)
     pub_date = models.DateField('date published')
     startup = models.ForeignKey(Startup, on_delete=models.CASCADE)
@@ -58,6 +59,7 @@ class NewsLink(models.Model):
         verbose_name = 'news article'   # To display in the admin console instead of 'News links'
         ordering = ['-pub_date']
         get_latest_by = 'pub_date'
+        unique_together = ('slug', 'startup')   # different startups can have the same slug field
 
     def __str__(self):
         return f'{self.startup}:{self.title}'

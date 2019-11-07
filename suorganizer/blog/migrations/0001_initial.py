@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
                 ('slug', models.SlugField(help_text='A label for URL config', max_length=63, unique_for_month='pub_date')),
                 ('text', models.TextField()),
                 ('pub_date', models.DateField(auto_now_add=True, verbose_name='date published')),
-                ('startup', models.ManyToManyField(related_name='blog_posts', to='organizer.Startup')),
+                ('startups', models.ManyToManyField(related_name='blog_posts', to='organizer.Startup')),
                 ('tags', models.ManyToManyField(related_name='blog_posts', to='organizer.Tag')),
             ],
             options={

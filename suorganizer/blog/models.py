@@ -11,8 +11,12 @@ class Post(models.Model):
         unique_for_month='pub_date')
     text = models.TextField()
     pub_date = models.DateField('date published', auto_now_add=True)
-    startups = models.ManyToManyField(Startup, related_name='blog_posts')   # related_name used instead of 'post_set'
-    tags = models.ManyToManyField(Tag, related_name='blog_posts')   # related_name used instead of 'post_set'
+    startups = models.ManyToManyField(Startup,
+                                      blank=True,
+                                      related_name='blog_posts')   # related_name used instead of 'post_set'
+    tags = models.ManyToManyField(Tag,
+                                  blank=True,
+                                  related_name='blog_posts')   # related_name used instead of 'post_set'
 
     class Meta:
         verbose_name = 'blog post'
