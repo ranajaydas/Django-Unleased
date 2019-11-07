@@ -35,7 +35,7 @@ class PostUpdate(View):
     def get(self, request, year, month, slug):
         post = self.get_object(year, month, slug)
         context = {
-            'form': self.form_class(),
+            'form': self.form_class(instance=post),
             'post': post,
         }
         return render(request, self.template_name, context)

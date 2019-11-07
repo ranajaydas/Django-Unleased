@@ -20,7 +20,7 @@ class TagUpdate(ObjectUpdateMixin, View):
 class TagDelete(ObjectDeleteMixin, View):
     model = Tag
     success_url = reverse_lazy('organizer_tag_list')
-    template_name = 'organizer/tag_form_delete.html'
+    template_name = 'organizer/tag_confirm_delete.html'
 
 
 def tag_list(request):
@@ -47,7 +47,7 @@ class StartupUpdate(ObjectUpdateMixin, View):
 class StartupDelete(ObjectDeleteMixin, View):
     model = Startup
     success_url = reverse_lazy('organizer_startup_list')
-    template_name = 'organizer/startup_form_delete.html'
+    template_name = 'organizer/startup_confirm_delete.html'
 
 
 def startup_list(request):
