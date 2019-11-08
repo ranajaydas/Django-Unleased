@@ -14,8 +14,8 @@ class PostCreate(View):
     def post(self, request):
         bound_form = self.form_class(request.POST)
         if bound_form.is_valid():
-            new_tag = bound_form.save()
-            return redirect(new_tag)
+            new_post = bound_form.save()
+            return redirect(new_post)
         else:
             return render(request, self.template_name, {'form': bound_form})
 

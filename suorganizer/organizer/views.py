@@ -1,6 +1,7 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.urls import reverse_lazy
 from django.views.generic import View
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Tag, Startup, NewsLink
 from .forms import TagForm, StartupForm, NewsLinkForm
 from .utils import ObjectCreateMixin, ObjectUpdateMixin, ObjectDeleteMixin
@@ -23,9 +24,46 @@ class TagDelete(ObjectDeleteMixin, View):
     template_name = 'organizer/tag_confirm_delete.html'
 
 
-def tag_list(request):
-    tag_list = Tag.objects.all()
-    return render(request, 'organizer/tag_list.html', {'tag_list': tag_list})
+class TagList(View):
+    template_name = 'organizer/tag_list.html'
+
+    def get(self, request):
+        tag_list = Tag.objects.all()
+        context = {
+            'tag_list': tag_list
+        }
+        return render(request, self.template_name, context)
+
+
+class TagPageList(View):
+    paginate_by = 5  # 5 items per page
+    template_name = 'organizer/tag_list.html'
+
+    def get(self, request, page_number):
+        tag_list = Tag.objects.all()
+        paginator = Paginator(tag_list, self.paginate_by)
+        try:
+            page = paginator.page(page_number)
+        except PageNotAnInteger:
+            page = paginator.page(1)
+        except EmptyPage:
+            page = paginator.page(paginator.num_pages)
+        if page.has_previous():
+            prev_url = reverse('organizer_tag_page', args=(page.previous_page_number(),))
+        else:
+            prev_url = None
+        if page.has_next():
+            next_url = reverse('organizer_tag_page', args=(page.next_page_number(),))
+        else:
+            next_url = None
+        context = {
+            'tag_list': page,
+            'paginator': paginator,
+            'is_paginated': page.has_other_pages(),
+            'next_page_url': next_url,
+            'prev_page_url': prev_url
+        }
+        return render(request, self.template_name, context)
 
 
 def tag_detail(request, slug):
@@ -50,9 +88,37 @@ class StartupDelete(ObjectDeleteMixin, View):
     template_name = 'organizer/startup_confirm_delete.html'
 
 
-def startup_list(request):
-    startup_list = Startup.objects.all()
-    return render(request, 'organizer/startup_list.html', {'startup_list': startup_list})
+class StartupList(View):
+    paginate_by = 5  # 5 items per page
+    page_kwarg = 'page'
+    template_name = 'organizer/startup_list.html'
+
+    def get(self, request):
+        startup_list = Startup.objects.all()
+        paginator = Paginator(startup_list, self.paginate_by)
+        page_number = request.GET.get(self.page_kwarg)
+        try:
+            page = paginator.page(page_number)
+        except PageNotAnInteger:
+            page = paginator.page(1)
+        except EmptyPage:
+            page = paginator.page(paginator.num_pages)
+        if page.has_previous():
+            prev_url = "?{}={}".format(self.page_kwarg, page.previous_page_number())
+        else:
+            prev_url = None
+        if page.has_next():
+            next_url = "?{}={}".format(self.page_kwarg, page.next_page_number())
+        else:
+            next_url = None
+        context = {
+            'startup_list': page,
+            'paginator': paginator,
+            'is_paginated': page.has_other_pages(),
+            'next_page_url': next_url,
+            'prev_page_url': prev_url
+        }
+        return render(request, self.template_name, context)
 
 
 def startup_detail(request, slug):
