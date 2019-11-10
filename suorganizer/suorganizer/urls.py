@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.contrib.flatpages import urls as flatpages_urls
 from django.urls import path, include
 from .views import redirect_root
 
@@ -26,4 +27,5 @@ urlpatterns = [
     path('newslink/', include('organizer.urls.newslink')),
     path('blog/', include('blog.urls')),
     path('contact/', include('contact.urls')),
+    path('', include(flatpages_urls)),  # Used for the About page at /about
 ]
