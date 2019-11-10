@@ -4,31 +4,34 @@
   {{ block.super }} - Startups
 {% endblock title %}
 
-{% block content %}
+{% block create_button %}
+    <a href="{% url 'organizer_startup_create' %}" class="button button-primary">Create New Startup</a>
+{% endblock %}
+
+{% block org_content %}
   <h2>Startup List</h2>
-  <div>
-    <a href="{% url 'organizer_startup_create' %}">Create New Startup</a>
+  <div class="mobile">
+    <a href="{% url 'organizer_startup_create' %}" class="button button-primary">Create New Startup</a>
   </div>
 
   <ul>
     {% for startup in startup_list %}
       <li>
         <a href="{{ startup.get_absolute_url }}">{{ startup.name }}</a>
-        <ul>
-          <li>
-            <a href="{{ startup.get_update_url }}">Edit Startup</a>
-          </li>
-          <li>
-            <a href="{{ startup.get_delete_url }}">Delete Startup</a>
-          </li>
+        <ul class="inline">
+          <li><a href="{{ startup.get_update_url }}">Edit Startup</a></li>
+          <li><a href="{{ startup.get_delete_url }}">Delete Startup</a></li>
         </ul>
       </li>
     {% empty %}
       <li><em>There are currently no Startups available.</em></li>
     {% endfor %}
   </ul>
+{% endblock org_content %}
+
+{% block content_footer %}
   {% if is_paginated %}
-    <ul>
+    <ul class="pagination">
       {% if prev_page_url %}
         <li>
           <a href="{{ prev_page_url }}">Previous</a>
@@ -46,4 +49,4 @@
     </ul>
   {% endif %}
 
-{% endblock content %}
+{% endblock content_footer %}

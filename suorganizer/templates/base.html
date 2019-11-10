@@ -1,3 +1,4 @@
+{% load staticfiles %}
 {% load flatpages %}
 {% get_flatpages as flatpages %}
 
@@ -12,13 +13,18 @@
       Startup Organizer
     {% endblock title %}
   </title>
+  <link rel="stylesheet" type="text/css" href="{% static 'site/normalize.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'site/skeleton.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'site/style.css' %}">
+  {% block head %}{% endblock %}
 </head>
 <body>
-  <div>
-    <header>
-      <h1>Startup Organizer</h1>
+  <div class="container">
+    <header class="row">
+      <div class="offset-by-one ten columns">
+        <h1 class="logo">Startup Organizer</h1>
+      </div>
     </header>
-
     <nav>
       <ul>
         <li><a href="{% url 'blog_post_list' %}">Blog</a></li>
@@ -32,9 +38,9 @@
     </nav>
 
     {% if messages %}
-      <div>
-        <div>
-          <ul>
+      <div class="row">
+        <div class="twelve columns">
+          <ul class="messages">
             {% for message in messages %}
               {% if message.tags %}
                 <li class="{{ message.tags }}">

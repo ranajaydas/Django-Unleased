@@ -5,12 +5,12 @@
 {% endblock title %}
 
 {% block content %}
-  <div>
-    <div>
+  <div class="row">
+    <div class="offset-by-two eight columns">
       <form action="{% url 'organizer_tag_create' %}" method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Create Tag</button>
+        <button type="submit" class="button-primary">Create Tag</button>
       </form>
     </div>
   </div>
