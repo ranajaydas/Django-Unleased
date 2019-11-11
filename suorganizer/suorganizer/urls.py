@@ -14,18 +14,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.contrib.flatpages import urls as flatpages_urls
+from django.views.generic import RedirectView, TemplateView
 from django.urls import path, include
-from .views import redirect_root
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', redirect_root),
+    path('', RedirectView.as_view(pattern_name='blog_post_list')),
     path('tag/', include('organizer.urls.tag')),
     path('startup/', include('organizer.urls.startup')),
-    path('newslink/', include('organizer.urls.newslink')),
     path('blog/', include('blog.urls')),
     path('contact/', include('contact.urls')),
-    path('', include(flatpages_urls)),  # Used for the About page at /about
+    path('about/', TemplateView.as_view(template_name='site/about.html'), name='about_site'),
 ]

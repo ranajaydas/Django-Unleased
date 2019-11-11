@@ -47,6 +47,12 @@ class Startup(models.Model):
     def get_delete_url(self):
         return reverse('organizer_startup_delete', kwargs={'slug': self.slug})
 
+    def get_newslink_create_url(self):
+        return reverse(
+            'organizer_newslink_create',
+            kwargs={'startup_slug': self.slug})
+
+
 
 class NewsLink(models.Model):
     title = models.CharField(max_length=63)
@@ -56,10 +62,10 @@ class NewsLink(models.Model):
     startup = models.ForeignKey(Startup, on_delete=models.CASCADE)
 
     class Meta:
-        verbose_name = 'news article'   # To display in the admin console instead of 'News links'
+        verbose_name = 'news article'  # To display in the admin console instead of 'News links'
         ordering = ['-pub_date']
         get_latest_by = 'pub_date'
-        unique_together = ('slug', 'startup')   # different startups can have the same slug field
+        unique_together = ('slug', 'startup')  # different startups can have the same slug field
 
     def __str__(self):
         return f'{self.startup}:{self.title}'
@@ -68,7 +74,15 @@ class NewsLink(models.Model):
         return self.startup.get_absolute_url()
 
     def get_update_url(self):
-        return reverse('organizer_newslink_update', kwargs={'pk': self.pk})
+        return reverse('organizer_newslink_update',
+                       kwargs={
+                           'startup_slug': self.startup.slug,
+                           'newslink_slug': self.slug
+                       })
 
     def get_delete_url(self):
-        return reverse('organizer_newslink_delete', kwargs={'pk': self.pk})
+        return reverse('organizer_newslink_delete',
+                       kwargs={
+                           'startup_slug': self.startup.slug,
+                           'newslink_slug': self.slug
+                       })

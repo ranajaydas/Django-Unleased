@@ -19,8 +19,8 @@
       <li>
         <a href="{{ startup.get_absolute_url }}">{{ startup.name }}</a>
         <ul class="inline">
-          <li><a href="{{ startup.get_update_url }}">Edit Startup</a></li>
-          <li><a href="{{ startup.get_delete_url }}">Delete Startup</a></li>
+          <li><a href="{{ startup.get_update_url }}" class="button">Edit Startup</a></li>
+          <li><a href="{{ startup.get_delete_url }}" class="button">Delete Startup</a></li>
         </ul>
       </li>
     {% empty %}
@@ -28,25 +28,3 @@
     {% endfor %}
   </ul>
 {% endblock org_content %}
-
-{% block content_footer %}
-  {% if is_paginated %}
-    <ul class="pagination">
-      {% if prev_page_url %}
-        <li>
-          <a href="{{ prev_page_url }}">Previous</a>
-        </li>
-      {% endif %}
-      <li>
-        Page {{ startup_list.number }}
-        of {{ startup_list.paginator.num_pages }}
-      </li>
-      {% if next_page_url %}
-        <li>
-          <a href="{{ next_page_url }}">Next</a>
-        </li>
-      {% endif %}
-    </ul>
-  {% endif %}
-
-{% endblock content_footer %}

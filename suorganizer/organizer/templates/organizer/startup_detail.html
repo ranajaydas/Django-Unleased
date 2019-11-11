@@ -40,7 +40,7 @@
         {% endif %}
             <h3>Recent News</h3>
             <p>
-              <a href="{% url 'organizer_newslink_create' %}" class="button">Add Article</a>
+              <a href="{{ startup.get_newslink_create_url }}" class="button">Add Article</a>
             </p>
             <ul>
               {% for newslink in startup.newslink_set.all %}
