@@ -16,7 +16,6 @@ Including another URLconf
 from django.contrib import admin
 from django.views.generic import RedirectView, TemplateView
 from django.urls import path, include
-from user import urls as user_urls
 
 
 urlpatterns = [
@@ -27,5 +26,5 @@ urlpatterns = [
     path('blog/', include('blog.urls')),
     path('contact/', include('contact.urls')),
     path('about/', TemplateView.as_view(template_name='site/about.html'), name='about_site'),
-    path('user/', include(user_urls)),
+    path('user/', include('user.urls')),
 ]

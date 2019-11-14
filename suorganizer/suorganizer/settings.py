@@ -140,10 +140,6 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 SITE_ID = 1
 
-# Login Settings
-# https://docs.djangoproject.com/en/1.8/topics/auth/
-from django.urls import reverse_lazy
-
-LOGIN_REDIRECT_URL = reverse_lazy('blog_post_list')
-LOGIN_URL = reverse_lazy('login')
-LOGOUT_URL = reverse_lazy('logout')
+LOGIN_REDIRECT_URL = 'blog_post_list'
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'

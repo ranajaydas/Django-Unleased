@@ -7,7 +7,14 @@
 {% block content %}
   <div class="row">
     <div class="offset-by-two five columns">
-      {% include 'user/login_form.html' %}
+      <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {% if next %}
+          <input type="hidden" name="next" value="{{ next }}">
+        {% endif %}
+        <button type="submit">{{ login_button|default:'Log in' }}</button>
+      </form>
     </div>
   </div>
 {% endblock %}
