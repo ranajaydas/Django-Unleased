@@ -53,7 +53,6 @@ class Startup(models.Model):
             kwargs={'startup_slug': self.slug})
 
 
-
 class NewsLink(models.Model):
     title = models.CharField(max_length=63)
     slug = models.SlugField(max_length=63)

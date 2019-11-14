@@ -43,7 +43,7 @@ class PageLinksMixin:
         return context
 
 
-class StartupContextMixin():
+class StartupContextMixin:
     startup_slug_url_kwarg = 'startup_slug'
     startup_context_object_name = 'startup'
 

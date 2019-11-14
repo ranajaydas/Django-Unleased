@@ -1,10 +1,10 @@
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView, CreateView, DeleteView, ListView
-from core.utils import UpdateView
 from .models import Tag, Startup, NewsLink
 from .forms import TagForm, StartupForm, NewsLinkForm
 from .utils import PageLinksMixin, NewsLinkGetObjectMixin, StartupContextMixin
+from core.utils import UpdateView
 
 
 class TagList(PageLinksMixin, ListView):

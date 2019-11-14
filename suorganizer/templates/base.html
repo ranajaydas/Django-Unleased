@@ -30,6 +30,11 @@
         <li><a href="{% url 'organizer_tag_list' %}">Tags</a></li>
         <li><a href="{% url 'contact' %}">Contact</a></li>
         <li><a href="{% url 'about_site' %}">About</a></li>
+        {% if user.is_authenticated %}
+          <li><a href="{% url 'logout' %}?next={{ request.path }}">Log Out</a></li>
+        {% else %}
+          <li><a href="{% url 'login' %}?next={{ request.path }}">Log In</a></li>
+        {% endif %}
       </ul>
     </nav>
 

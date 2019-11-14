@@ -254,12 +254,6 @@ body>footer li{
 	margin: 0 1em;
 }
 
-.feed {
-  margin-left: 3px;
-  padding: 0 0 0 19px;
-  background: url("/static/site/rss.png") no-repeat 0 50%;
-}
-
 /* Larger than mobile */
 @media (min-width: 400px) {}
 

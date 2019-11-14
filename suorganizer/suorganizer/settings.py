@@ -37,11 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites',
+    'django.contrib.sites',     # Added for creating flatpages
     'blog',
     'organizer',
     'contact',
     'core',
+    'user',
 ]
 
 MIDDLEWARE = [
@@ -138,3 +139,11 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 SITE_ID = 1
+
+# Login Settings
+# https://docs.djangoproject.com/en/1.8/topics/auth/
+from django.urls import reverse_lazy
+
+LOGIN_REDIRECT_URL = reverse_lazy('blog_post_list')
+LOGIN_URL = reverse_lazy('login')
+LOGOUT_URL = reverse_lazy('logout')
