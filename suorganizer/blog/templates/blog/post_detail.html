@@ -15,14 +15,12 @@
             <time datetime="{{ post.pub_date|date:'Y-m-d' }}">
               {{ post.pub_date|date:"l, F jS, Y" }}
             </time>
-            <ul class="inline">
-              <li>
-                <a href="{{ post.get_update_url }}" class="button">Edit Post</a>
-              </li>
-              <li>
-                <a href="{{ post.get_delete_url }}" class="button">Delete Post</a>
-              </li>
-            </ul>
+            {% if perms.blog.change_post or perm.blog.delete_post %}
+              <ul class="inline">
+                <li><a href="{{ post.get_update_url }}" class="button">Edit Post</a></li>
+                <li><a href="{{ post.get_delete_url }}" class="button">Delete Post</a></li>
+              </ul>
+            {% endif %}
           </p>
         </header>
 

@@ -9,10 +9,12 @@
   <div class="row">
     <div class="offset-by-two eight columns">
       <h2>{{ startup.name }}</h2>
-      <ul class="inline">
-          <li><a href="{{ startup.get_update_url }}" class="button">Edit Startup</a></li>
-          <li><a href="{{ startup.get_delete_url }}" class="button">Delete Startup</a></li>
-      </ul>
+      {% if perms.organizer.change_startup or perms.organizer.delete_startup %}
+        <ul class="inline">
+            <li><a href="{{ startup.get_update_url }}" class="button">Edit Startup</a></li>
+            <li><a href="{{ startup.get_delete_url }}" class="button">Delete Startup</a></li>
+        </ul>
+      {% endif %}
       <dl>
         <dt>Date Founded</dt>
           <dd>{{ startup.founded_date|date:"F jS, Y" }}</dd>
@@ -39,17 +41,21 @@
           <section class="meta offset-by-two two-thirds column">
         {% endif %}
             <h3>Recent News</h3>
-            <p>
-              <a href="{{ startup.get_newslink_create_url }}" class="button">Add Article</a>
-            </p>
+            {% if perms.organizer.add_newslink %}
+              <p>
+                <a href="{{ startup.get_newslink_create_url }}" class="button">Add Article</a>
+              </p>
+            {% endif %}
             <ul>
               {% for newslink in startup.newslink_set.all %}
                 <li>
                   <a href="{{ newslink.link }}">{{ newslink.title|title }}</a>
-                  <ul class="inline">
-                      <li><a href="{{ newslink.get_update_url }}" class="button">Edit Link</a></li>
-                      <li><a href="{{ newslink.get_delete_url }}" class="button">Delete Link</a></li>
-                  </ul>
+                  {% if perms.organizer.change_newslink or perms.organizer.delete_newslink %}
+                    <ul class="inline">
+                        <li><a href="{{ newslink.get_update_url }}" class="button">Edit Link</a></li>
+                        <li><a href="{{ newslink.get_delete_url }}" class="button">Delete Link</a></li>
+                    </ul>
+                  {% endif %}
                 </li>
               {% endfor %}
             </ul>

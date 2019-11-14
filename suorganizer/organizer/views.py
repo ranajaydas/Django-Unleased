@@ -1,6 +1,8 @@
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView, CreateView, DeleteView, ListView
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+
 from .models import Tag, Startup, NewsLink
 from .forms import TagForm, StartupForm, NewsLinkForm
 from .utils import PageLinksMixin, NewsLinkGetObjectMixin, StartupContextMixin
@@ -16,17 +18,19 @@ class TagDetail(DetailView):
     model = Tag
 
 
-class TagCreate(CreateView):
+class TagCreate(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
+    form_class = TagForm
+    model = Tag
+    permission_required = 'organizer.add_tag'
+    raise_exception = True
+
+
+class TagUpdate(LoginRequiredMixin, UpdateView):
     form_class = TagForm
     model = Tag
 
 
-class TagUpdate(UpdateView):
-    form_class = TagForm
-    model = Tag
-
-
-class TagDelete(DeleteView):
+class TagDelete(LoginRequiredMixin, DeleteView):
     model = Tag
     success_url = reverse_lazy('organizer_tag_list')
 
@@ -40,22 +44,22 @@ class StartupDetail(DetailView):
     model = Startup
 
 
-class StartupCreate(CreateView):
+class StartupCreate(LoginRequiredMixin, CreateView):
     form_class = StartupForm
     model = Startup
 
 
-class StartupUpdate(UpdateView):
+class StartupUpdate(LoginRequiredMixin, UpdateView):
     form_class = StartupForm
     model = Startup
 
 
-class StartupDelete(DeleteView):
+class StartupDelete(LoginRequiredMixin, DeleteView):
     model = Startup
     success_url = reverse_lazy('organizer_startup_list')
 
 
-class NewsLinkCreate(NewsLinkGetObjectMixin, StartupContextMixin, CreateView):
+class NewsLinkCreate(LoginRequiredMixin, NewsLinkGetObjectMixin, StartupContextMixin, CreateView):
     form_class = NewsLinkForm
     model = NewsLink
 
@@ -67,13 +71,13 @@ class NewsLinkCreate(NewsLinkGetObjectMixin, StartupContextMixin, CreateView):
         return initial
 
 
-class NewsLinkUpdate(NewsLinkGetObjectMixin, StartupContextMixin, UpdateView):
+class NewsLinkUpdate(LoginRequiredMixin, NewsLinkGetObjectMixin, StartupContextMixin, UpdateView):
     model = NewsLink
     form_class = NewsLinkForm
     slug_url_kwarg = 'newslink_slug'
 
 
-class NewsLinkDelete(NewsLinkGetObjectMixin, StartupContextMixin, DeleteView):
+class NewsLinkDelete(LoginRequiredMixin, NewsLinkGetObjectMixin, StartupContextMixin, DeleteView):
     model = NewsLink
     slug_url_kwarg = 'newslink_slug'
 
