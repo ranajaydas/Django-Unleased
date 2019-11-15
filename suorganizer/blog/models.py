@@ -1,10 +1,12 @@
 from django.db import models
 from django.shortcuts import reverse
 from organizer.models import Startup, Tag
+from django.conf import settings
 
 
 class Post(models.Model):
     title = models.CharField(max_length=63)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='blog_posts', on_delete=models.CASCADE)
     slug = models.SlugField(
         max_length=63,
         help_text='A label for URL config',

@@ -4,8 +4,8 @@ from django.views.generic import (CreateView, DeleteView, DetailView,
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Post
-from .forms import PostForm
 from .utils import PostGetMixin
+from .forms import PostForm
 from core.utils import UpdateView
 
 
@@ -37,13 +37,17 @@ class PostDetail(PostGetMixin, DetailView):
 
 
 class PostCreate(LoginRequiredMixin, CreateView):
-    form_class = PostForm
     model = Post
+    form_class = PostForm
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 
 
 class PostUpdate(LoginRequiredMixin, PostGetMixin, UpdateView):
-    form_class = PostForm
     model = Post
+    form_class = PostForm
 
 
 class PostDelete(LoginRequiredMixin, PostGetMixin, DeleteView):

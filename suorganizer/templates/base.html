@@ -31,6 +31,7 @@
         <li><a href="{% url 'contact' %}">Contact</a></li>
         <li><a href="{% url 'about_site' %}">About</a></li>
         {% if user.is_authenticated %}
+          <li><a href="{% url 'profile' %}">View Profile</a></li>
           <li><a href="{% url 'logout' %}?next={{ request.path }}">Logout</a></li>
         {% else %}
           <li><a href="{% url 'login' %}?next={{ request.path }}">Login</a></li>

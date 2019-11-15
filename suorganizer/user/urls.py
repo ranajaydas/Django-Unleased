@@ -1,7 +1,7 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from django.views.generic import RedirectView
-from .views import DisableAccount, register
+from .views import register, DisableAccount, ProfileDetail, ProfileUpdate, PublicProfileDetail
 
 urlpatterns = [
     path('', RedirectView.as_view(pattern_name='login', permanent=False)),
@@ -27,4 +27,8 @@ urlpatterns = [
          name='password_reset_complete'),
     path('disable/', DisableAccount.as_view(), name='disable'),
     path('register/', register, name='register'),
+    path('profile/', ProfileDetail.as_view(), name='profile'),
+    path('profile/edit/', ProfileUpdate.as_view(), name='profile_update'),
+    path('<slug>/', PublicProfileDetail.as_view(), name='public_profile'),
+
 ]

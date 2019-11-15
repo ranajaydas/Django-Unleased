@@ -15,6 +15,7 @@
             <time datetime="{{ post.pub_date|date:'Y-m-d' }}">
               {{ post.pub_date|date:"l, F jS, Y" }}
             </time>
+            by <a href="{{ post.author.profile.get_absolute_url }}">{{ post.author.profile.name }}</a>
             {% if perms.blog.change_post or perm.blog.delete_post %}
               <ul class="inline">
                 <li><a href="{{ post.get_update_url }}" class="button">Edit Post</a></li>

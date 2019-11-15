@@ -4,10 +4,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.template.response import TemplateResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_protect
-from django.views.generic import View
+from django.views.generic import View, DetailView, UpdateView
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.contrib import messages
+from .models import Profile
 from .forms import UserRegisterForm
+from .utils import ProfileGetObjectMixin
 
 
 def register(request):
@@ -39,3 +42,18 @@ class DisableAccount(LoginRequiredMixin, View):
         user.save()
         logout(request)
         return redirect(self.success_url)
+
+
+class ProfileDetail(LoginRequiredMixin, ProfileGetObjectMixin, DetailView):
+    model = Profile
+
+
+class ProfileUpdate(LoginRequiredMixin, ProfileGetObjectMixin, UpdateView):
+    model = Profile
+    fields = ('name', 'about',)
+    success_url = reverse_lazy('profile')
+
+
+class PublicProfileDetail(DetailView):
+    model = Profile
+
