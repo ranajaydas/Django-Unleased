@@ -1,10 +1,15 @@
+"""
+Don't make all this for a real project without understanding what's going on.
+Potential side effects - will fuck up the password reset email links.
+"""
+
 from django.conf import settings
 from django.db import migrations, models
 
 
 def add_site_data(apps, schema_editor):
     Site = apps.get_model('sites', 'Site')
-    new_domain = 'http://ranajayontheroad.com'
+    new_domain = '127.0.0.1:8000'
     new_name = 'Startup Organizer'
     site_id = getattr(settings, 'SITE_ID', 1)
     if Site.objects.exists():
@@ -23,8 +28,8 @@ def add_site_data(apps, schema_editor):
 def remove_site_data(apps, schema_editor):
     Site = apps.get_model('sites', 'Site')
     current_site = Site.objects.get(pk=getattr(settings, 'SITE_ID', 1))
-    current_site.domain = 'example.com'
-    current_site.name = 'example.com'
+    current_site.domain = '127.0.0.1:8000'
+    current_site.name = 'Startup Organizer'
     current_site.save()
 
 

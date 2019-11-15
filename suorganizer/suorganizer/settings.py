@@ -88,16 +88,6 @@ DATABASES = {
     }
 }
 
-# Email
-# https://docs.djangoproject.com/en/1.8/topics/email/
-
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-SERVER_EMAIL = 'ranajay@gmail.com'
-DEFAULT_FROM_EMAIL = 'no-reply@ranajayontheroad.com'
-EMAIL_SUBJECT_PREFIX = '[Startup Organizer] '
-MANAGERS = (
-    ('Me', 'ranajay@outlook.com'),
-)
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -143,3 +133,13 @@ SITE_ID = 1
 LOGIN_REDIRECT_URL = 'blog_post_list'
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
+
+
+# Variables for Password Reset Email
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASS')
+DEFAULT_FROM_EMAIL = 'Startup Organizer Team <noreply@ranajayontheroad.com>'

@@ -16,5 +16,10 @@
         <button type="submit">{{ login_button|default:'Log in' }}</button>
       </form>
     </div>
+    <div class="three columns">
+      <ul class="task-list">
+        <li><a href="{% url 'password_reset' %}">Forgotten password?</a></li>
+      </ul>
+    </div>
   </div>
 {% endblock %}
