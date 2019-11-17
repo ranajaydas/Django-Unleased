@@ -56,4 +56,3 @@ class ProfileUpdate(LoginRequiredMixin, ProfileGetObjectMixin, UpdateView):
 
 class PublicProfileDetail(DetailView):
     model = Profile
-

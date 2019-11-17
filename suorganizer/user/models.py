@@ -19,4 +19,3 @@ class Profile(models.Model):
     def get_update_url(self):
         return reverse('profile_update')
 
-

@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.views.generic import RedirectView, TemplateView
 from django.urls import path, include
 
+admin.site.site_header = 'Startup Organizer Admin'
+admin.site.site_title = 'Startup Organizer Site Admin'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
