@@ -32,8 +32,11 @@ class PostArchiveMonth(MonthArchiveView):
 
 
 class PostDetail(PostGetMixin, DetailView):
-    model = Post
     allow_future = True
+    queryset = (Post.objects
+                .select_related('author__profile')
+                .prefetch_related('tags')
+                .prefetch_related('startups'))
 
 
 class PostCreate(LoginRequiredMixin, CreateView):

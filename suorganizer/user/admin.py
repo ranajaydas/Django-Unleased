@@ -27,6 +27,9 @@ class CustomUserAdmin(UserAdmin):
     get_name.short_description = 'name'
     get_name.admin_order_field = 'profile__name'
 
+    # Database calls optimization
+    list_select_related = ('profile',)
+
     # Form to view users
     fieldsets = ((None, {'classes': ('wide',),
                          'fields': ('email', 'username',)}),

@@ -15,7 +15,7 @@ class TagList(PageLinksMixin, ListView):
 
 
 class TagDetail(DetailView):
-    model = Tag
+    queryset = (Tag.objects.prefetch_related('startup_set'))
 
 
 class TagCreate(PermissionRequiredMixin, LoginRequiredMixin, CreateView):
@@ -41,7 +41,10 @@ class StartupList(PageLinksMixin, ListView):
 
 
 class StartupDetail(DetailView):
-    model = Startup
+    queryset = (Startup.objects
+                .prefetch_related('tags')
+                .prefetch_related('blog_posts')
+                .prefetch_related('newslink_set'))
 
 
 class StartupCreate(LoginRequiredMixin, CreateView):
