@@ -30,5 +30,4 @@ urlpatterns = [
     path('profile/', ProfileDetail.as_view(), name='profile'),
     path('profile/edit/', ProfileUpdate.as_view(), name='profile_update'),
     path('<slug>/', PublicProfileDetail.as_view(), name='public_profile'),
-
 ]
