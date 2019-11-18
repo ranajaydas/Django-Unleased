@@ -8,7 +8,7 @@
   {% if perms.organizer.add_tag %}
       <a href="{% url 'organizer_tag_create' %}" class="button button-primary">Create New Tag</a>
   {% endif %}
-{% endblock %}
+{% endblock create_button %}
 
 {% block org_content %}
   <h2>Tag List</h2>
@@ -32,4 +32,4 @@
       <li><em>There are currently no Tags available.</em></li>
     {% endfor %}
   </ul>
-{% endblock %}
+{% endblock org_content %}

@@ -1,4 +1,6 @@
-{% extends parent_template|default:"organizer/base_organizer.html" %}
+{% extends parent_template|default:'organizer/base_organizer.html' %}
+{% load obfuscate_email %}
+{% load partial_post_list %}
 
 {% block title %}
   {{ block.super }} - {{ startup.name }}
@@ -21,7 +23,7 @@
         <dt>Website</dt>
           <dd>{{ startup.website|urlize }}</dd>
         <dt>Contact</dt>
-          <dd>{{ startup.contact }}</dd>
+          <dd>{{ startup.contact|obfuscate }}</dd>
         <dt>Tag{{ startup.tags.count|pluralize }}</dt>
           {% for tag in startup.tags.all %}
             <dd><a href="{{ tag.get_absolute_url }}">{{ tag.name|title }}</a></dd>
@@ -33,54 +35,33 @@
 
   {% if startup.newslink_set.all or startup.blog_posts.all %}
     <div class="row">
-
       {% if startup.newslink_set.all %}
-        {% if startup.blog_posts.all  %}
-          <section class="meta offset-by-two one-third column">
-        {% else %}
-          <section class="meta offset-by-two two-thirds column">
-        {% endif %}
-            <h3>Recent News</h3>
-            {% if perms.organizer.add_newslink %}
-              <p>
-                <a href="{{ startup.get_newslink_create_url }}" class="button">Add Article</a>
-              </p>
-            {% endif %}
-            <ul>
-              {% for newslink in startup.newslink_set.all %}
-                <li>
-                  <a href="{{ newslink.link }}">{{ newslink.title|title }}</a>
-                  {% if perms.organizer.change_newslink or perms.organizer.delete_newslink %}
-                    <ul class="inline">
-                        <li><a href="{{ newslink.get_update_url }}" class="button">Edit Link</a></li>
-                        <li><a href="{{ newslink.get_delete_url }}" class="button">Delete Link</a></li>
-                    </ul>
-                  {% endif %}
-                </li>
-              {% endfor %}
-            </ul>
-          </section>
+        <section class="meta offset-by-two one-third column">
+          <h3>Recent News</h3>
+          {% if perms.organizer.add_newslink %}
+            <p>
+              <a href="{{ startup.get_newslink_create_url }}" class="button">Add Article</a>
+            </p>
+          {% endif %}
+          <ul>
+            {% for newslink in startup.newslink_set.all %}
+              <li><a href="{{ newslink.link }}">{{ newslink.title|title }}</a>
+                {% if perms.organizer.change_newslink or perms.organizer.delete_newslink %}
+                  <ul class="inline">
+                      <li><a href="{{ newslink.get_update_url }}" class="button">Edit Link</a></li>
+                      <li><a href="{{ newslink.get_delete_url }}" class="button">Delete Link</a></li>
+                  </ul>
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        </section>
       {% endif %}
 
-      {% if startup.blog_posts.all %}
-        {% if startup.newslink_set.all %}
-          <section class="meta one-third column">
-        {% else %}
-          <section class="meta offset-by-two two-thirds column">
-        {% endif %}
-            <h3>Blog Post{{ startup.blog_posts.all|pluralize }}</h3>
-            <ul>
-              {% for post in startup.blog_posts.all %}
-                <li>
-                  <a href="{{ post.get_absolute_url }}">{{ post.title|title }}</a>
-                </li>
-              {% endfor %}
-            </ul>
-          </section>
-      {% endif %}
+      {% format_post_list startup opposite=startup.newslink_set.all perm_button=perms.organizer.add_newslink%}
 
     </div> <!-- row -->
-  {% endif %}
 
+  {% endif %}
 </article>
 {% endblock content %}

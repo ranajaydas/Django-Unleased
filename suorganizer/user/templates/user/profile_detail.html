@@ -1,8 +1,9 @@
 {% extends parent_template|default:"user/base_user.html" %}
+{% load partial_post_list %}
 
 {% block title %}
-{{ block.super }} - {{ profile.user.get_username }}'s Profile
-{% endblock %}
+    {{ block.super }} - {{ profile.user.get_username }}'s Profile
+{% endblock title %}
 
 {% block content %}
     <div class="row">
@@ -14,16 +15,7 @@
         <h2>About {{ profile.name }}</h2>
         {{ profile.about|default:"No Profile"|linebreaks }}
 
-        {% if profile.user.blog_posts.all %}
-          <section>
-            <h3>Blog Post{{ profile.user.blog_posts.count|pluralize }}</h3>
-            <ul>
-              {% for post in profile.user.blog_posts.all %}
-                <li><a href="{{ post.get_absolute_url }}">{{ post.title|title }}</a></li>
-              {% endfor %}
-            </ul>
-          </section>
-        {% endif %}
+        {% format_post_list profile.user %}
         </div><!-- columns -->
 
     {% if user.pk == profile.user.pk %}
@@ -36,4 +28,4 @@
         </div>
     {% endif %}
     </div>
-{% endblock %}
+{% endblock content %}
