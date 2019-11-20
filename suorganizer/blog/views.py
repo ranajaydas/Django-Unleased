@@ -16,7 +16,7 @@ class PostList(ArchiveIndexView):
     date_field = 'pub_date'
     make_object_list = True
     paginate_by = 5
-    template_name = 'blog/post_list.html'
+    template_name = 'blog/post_list.html'   # default template is blog/post_archive.html
 
 
 class PostArchiveYear(YearArchiveView):

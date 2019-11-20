@@ -2,7 +2,7 @@
 
 {% block title %}
 {{ block.super }} - {{ month|date:"F Y" }} Posts
-{% endblock %}
+{% endblock title %}
 
 {% block content %}
 <div class="row">
@@ -62,4 +62,4 @@
     </ul>
   </div>
 </div>
-{% endblock %}
+{% endblock content %}
