@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',  # Added for creating flatpages
+    'django.contrib.sitemaps',  # Added for creating sitemaps
     'blog',
     'organizer',
     'contact',

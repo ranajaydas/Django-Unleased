@@ -17,6 +17,10 @@ from django.conf import settings
 from django.contrib import admin
 from django.views.generic import RedirectView, TemplateView
 from django.urls import path, include
+from django.contrib.sitemaps.views import (index as site_index_view, sitemap as sitemap_view)
+from blog.feeds import AtomPostFeed, Rss2PostFeed
+from .sitemaps import sitemaps as sitemaps_dict
+
 
 admin.site.site_header = 'Startup Organizer Admin'
 admin.site.site_title = 'Startup Organizer Site Admin'
@@ -30,6 +34,11 @@ urlpatterns = [
     path('contact/', include('contact.urls')),
     path('about/', TemplateView.as_view(template_name='site/about.html'), name='about_site'),
     path('user/', include('user.urls')),
+    path('sitenews/rss/', Rss2PostFeed(), name='blog_rss_feed'),
+    path('sitenews/atom/', AtomPostFeed(), name='blog_atom_feed'),
+    path('sitemap.xml', site_index_view, {'sitemaps': sitemaps_dict}, name='sitemap'),
+    path('sitemap-<section>.xml', sitemap_view, {'sitemaps': sitemaps_dict},
+         name='django.contrib.sitemaps.views.sitemap'),
 ]
 
 if settings.DEBUG:

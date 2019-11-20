@@ -1,5 +1,6 @@
 from django.db import models
 from django.shortcuts import reverse
+from urllib.parse import urlparse
 
 
 class Tag(models.Model):
@@ -48,9 +49,13 @@ class Startup(models.Model):
         return reverse('organizer_startup_delete', kwargs={'slug': self.slug})
 
     def get_newslink_create_url(self):
-        return reverse(
-            'organizer_newslink_create',
-            kwargs={'startup_slug': self.slug})
+        return reverse('organizer_newslink_create', kwargs={'startup_slug': self.slug})
+
+    def get_feed_atom_url(self):
+        return reverse('organizer_startup_atom_feed', kwargs={'startup_slug': self.slug})
+
+    def get_feed_rss_url(self):
+        return reverse('organizer_startup_rss_feed', kwargs={'startup_slug': self.slug})
 
 
 class NewsLink(models.Model):
@@ -85,3 +90,7 @@ class NewsLink(models.Model):
                            'startup_slug': self.startup.slug,
                            'newslink_slug': self.slug
                        })
+
+    def description(self):
+        return ('Written on {0:%A, %B} {0.day}, {0:%Y}; hosted at {1}'.format(self.pub_date,
+                                                                              urlparse(self.link).netloc))

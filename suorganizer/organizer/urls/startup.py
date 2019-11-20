@@ -1,6 +1,7 @@
 from django.urls import path
 from ..views import (NewsLinkCreate, NewsLinkUpdate, NewsLinkDelete,
                      StartupList, StartupCreate, StartupUpdate, StartupDelete, StartupDetail)
+from ..feeds import AtomPostFeed, Rss2PostFeed
 
 urlpatterns = [
     path('', StartupList.as_view(), name='organizer_startup_list'),
@@ -11,4 +12,6 @@ urlpatterns = [
     path('<startup_slug>/add_article_link', NewsLinkCreate.as_view(), name='organizer_newslink_create'),
     path('<startup_slug>/<newslink_slug>/update', NewsLinkUpdate.as_view(), name='organizer_newslink_update'),
     path('<startup_slug>/<newslink_slug>/delete', NewsLinkDelete.as_view(), name='organizer_newslink_delete'),
+    path('<startup_slug>/atom', AtomPostFeed(), name='organizer_startup_atom_feed'),
+    path('<startup_slug>/rss', Rss2PostFeed(), name='organizer_startup_rss_feed'),
 ]
